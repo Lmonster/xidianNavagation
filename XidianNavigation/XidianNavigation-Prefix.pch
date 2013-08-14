@@ -1,0 +1,25 @@
+//
+// Prefix header for all source files of the 'XidianNavigation' target in the 'XidianNavigation' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_3_0
+#warning "This project uses features only available in iOS SDK 3.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+    #import "PPRevealSideViewController.h"
+    #import "MKNetworkKit/MKNetworkKit.h"
+    #import "BWStatusBarOverlay.h"
+    #import "MTStatusBarOverlay.h"
+    #import "CCAppDelegate.h"
+    #import "CCMainTableViewController.h"
+    #import "SVWebViewController.h"
+    #import "CCWebViewController.h"
+    #import "EGORefreshTableHeaderView.h"
+    #import "UIColor+HexColor.h"
+    #import "ThemeManager.h"
+#endif

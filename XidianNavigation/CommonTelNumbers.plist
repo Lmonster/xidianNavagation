@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>常用电话 - 北校区</key>
+	<dict>
+		<key>总值班室</key>
+		<string>029-88202212</string>
+		<key>报警中心</key>
+		<string>029-88201110</string>
+		<key>火警中心</key>
+		<string>029-88201119</string>
+		<key>白沙路派出所</key>
+		<string>029-86755430</string>
+		<key>医院急诊</key>
+		<string>029-88202779</string>
+		<key>网络服务</key>
+		<string>029-88201252</string>
+		<key>能源收费</key>
+		<string>029-88204726</string>
+		<key>水维修</key>
+		<string>029-88202768</string>
+		<key>暖气地热维修</key>
+		<string>029-88201344</string>
+		<key>天然气</key>
+		<string>029-88202780</string>
+		<key>电维修</key>
+		<string>029-88202314</string>
+		<key>一卡通中心</key>
+		<string>029-88204626</string>
+	</dict>
+	<key>常用电话 - 南校区</key>
+	<dict>
+		<key>总值班室</key>
+		<string>029-81891818</string>
+		<key>家属区立远物业管理</key>
+		<string>029-81892811</string>
+		<key>家属区立远物业维修</key>
+		<string>029-81892812</string>
+		<key>基建处投诉24小时热线</key>
+		<string>18966601056</string>
+		<key>报警中心</key>
+		<string>029-81891110</string>
+		<key>火警中心</key>
+		<string>029-81891119</string>
+		<key>兴隆派出所</key>
+		<string>029-85849110</string>
+		<key>医院急诊</key>
+		<string>029-81891203</string>
+		<key>网络服务</key>
+		<string>029-81891357</string>
+		<key>能源收费</key>
+		<string>029-81891136</string>
+		<key>水维修</key>
+		<string>029-81891015</string>
+		<key>学生电视维修</key>
+		<string>029-81891197</string>
+		<key>一卡通中心</key>
+		<string>029-81891135</string>
+	</dict>
+	<key>热门电话</key>
+	<dict>
+		<key>火车票预定</key>
+		<string>029-95105105</string>
+		<key>交通银行（北）</key>
+		<string>029-88202245</string>
+		<key>交通银行（南）</key>
+		<string>029-81891262</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<array>
+		<string>西安电子科技大学</string>
+		<string>西电招生办</string>
+		<string>西电新闻</string>
+		<string>西电电视台</string>
+		<string>西电学术</string>
+		<string>西电校友会</string>
+		<string>西电出版社有限公司</string>
+		<string>西电导航</string>
+	</array>
+	<array>
+		<string>通信工程学院</string>
+		<string>电子工程学院</string>
+		<string>计算机学院</string>
+		<string>软件学院</string>
+		<string>经济管理学院</string>
+		<string>MBA中心</string>
+	</array>
+	<array>
+		<string>西电学生会</string>
+		<string>西电研究生会</string>
+		<string>西电学生事务委员会</string>
+		<string>西电华为创新俱乐部</string>
+		<string>西电微软技术俱乐部</string>
+		<string>西电腾讯创新俱乐部</string>
+		<string>通院学生会</string>
+		<string>西电通院研究生会</string>
+		<string>电院学生会</string>
+		<string>电院研究生会</string>
+		<string>计算机院学生会</string>
+		<string>计算机院研究生会</string>
+		<string>机电院学生会</string>
+		<string>机电院研究生会</string>
+		<string>技物院学生会</string>
+		<string>理学院学生会</string>
+		<string>理学院研究生会</string>
+		<string>微电子院学生会</string>
+		<string>软件学院研究生会</string>
+		<string>生科院研究生会</string>
+		<string>西电大学生社团联合会</string>
+		<string>西电团委</string>
+		<string>通院团委</string>
+		<string>电院团委</string>
+		<string>计算机院团委</string>
+		<string>技物院团委</string>
+		<string>理学院团委</string>
+		<string>人文院团委</string>
+	</array>
+	<array>
+		<string>西电睿思BT</string>
+		<string>西电好网</string>
+		<string>西电雁塔晨钟</string>
+		<string>西电网协</string>
+		<string>西电微博协会</string>
+		<string>聚焦西电</string>
+		<string>西电微吧</string>
+		<string>西电小喇叭</string>
+		<string>微西电</string>
+		<string>开源社区</string>
+	</array>
+</array>
+</plist>

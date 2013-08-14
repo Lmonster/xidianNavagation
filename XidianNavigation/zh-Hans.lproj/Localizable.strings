@@ -1,0 +1,11 @@
+/* 
+  Localizable.strings
+  XidianNavigation
+
+  Created by ooops on 13-3-24.
+  Copyright (c) 2013年 http://ooopscc.com. All rights reserved.
+*/
+"Release to refresh..."="松开立即刷新...";
+"Pull down to refresh..."="下拉可以刷新...";
+"Loading..."="加载中...";
+"Last Updated"="最后更新";
