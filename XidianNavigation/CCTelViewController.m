@@ -110,7 +110,8 @@
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
 {
-    NSMutableArray *indexTitles = [[NSMutableArray alloc] initWithCapacity:[self.cellContentKeys count]];
+//    NSMutableArray *indexTitles = [[NSMutableArray alloc] initWithCapacity:[self.cellContentKeys count]];
+    NSMutableArray *indexTitles = [NSMutableArray arrayWithCapacity:[self.cellContentKeys count]];
     
     for (id key in self.cellContentKeys) {
         NSString *string = [[key substringToIndex:2] copy];

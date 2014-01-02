@@ -1,0 +1,17 @@
+#OS junk files
+[Tt]humbs.db
+*.DS_Store
+*.bak*
+profile
+
+#Xcode files
+.xcuserstate
+*/xcuserdata/
+*.xcuserdatad
+*.xcworkspace
+*.xcodeproj/*.pbxuser
+
+#Project files
+[Bb]uild/*
+*~.nib
+*~

@@ -37,16 +37,19 @@
 
 enum {
     XDIndexPage,                    //主页
-    XDTimeIndex,                    //时间    time.xidian.cc
-    XDTelephoneIndex,               //电话    tel.xidian.cc
-    XDCurriculumScheduleIndex,      //课表    kb.xidian.cc
-    XDNewsIndex,                    //新闻    news.xidian.cc
-    XDTeacherPagesIndex,            //教师    web.xidian.edu.cn/wap
-    XDRecuitmentIndex,              //招聘    job.xidian.edu.cn
-    XDAcademiaIndex,                //学术    meeting.xidian.edu.cn
+    XDTimeIndex,                    //时间    http://time.xidian.cc
+    XDTelephoneIndex,               //电话    http://tel.xidian.cc/m
+    XDCurriculumScheduleIndex,      //课表    http://kb.xidian.cc/m
+    XDNewsIndex,                    //新闻    http://news.xidian.cc
+    XDTeacherPagesIndex,            //教师    http://web.xidian.edu.cn/wap
+    XDRecuitmentIndex,              //招聘    http://job.xidian.edu.cn
+    XDAcademiaIndex,                //学术    http://meeting.xidian.edu.cn
+    XDWelcomeNewbieIndex,           //迎新    http://new.xidian.cc/m
+    XDMapIndex,                     //地图    http://map.xidian.cc/m
+    XDCEERIndex,                    //高考录取  (college entrance examination recruitment)  http://www.xidian.cc/app/all2013/2013query.html
     XDSinaWeiboIndex,               //微博
-    XDLostAndFindIndex,             //失物招领  
-    XDTotalCount,                   //总数    
+    XDLostAndFindIndex,             //失物招领  http://find.xidian.cc/mobile/index.php?type=1 && http://find.xidian.cc/mobile/index.php?type=2
+    XDTotalCount,                   //总数
 };
 
 

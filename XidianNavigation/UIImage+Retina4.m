@@ -14,8 +14,8 @@
 + (void)load {
     if  ((UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) &&
          ([UIScreen mainScreen].bounds.size.height > 480.0f)) {
-//        method_exchangeImplementations(class_getClassMethod(self, @selector(imageNamed:)),
-//                                       class_getClassMethod(self, @selector(imageNamedH568:)));
+        //        method_exchangeImplementations(class_getClassMethod(self, @selector(imageNamed:)),
+        //                                       class_getClassMethod(self, @selector(imageNamedH568:)));
         method_exchangeImplementations(class_getClassMethod(self, @selector(imageWithContentsOfFile:)),
                                        class_getClassMethod(self, @selector(imageH568WithContentsOfFile:)));
 

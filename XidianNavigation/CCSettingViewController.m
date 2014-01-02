@@ -94,7 +94,7 @@
             hud.dimBackground = NO;
             hud.mode = MBProgressHUDModeText;
             hud.labelText = [NSString stringWithFormat:@"发现新版本"];
-            hud.detailsLabelText = [NSString stringWithFormat:@"发现新版本：v%@，可去App Store更新下载", remoteVersion];
+            hud.detailsLabelText = [NSString stringWithFormat:@"新版本：v%@，可去App Store更新！", remoteVersion];
             [hud hide:YES afterDelay:4.0f];
         } else {
             hud.dimBackground = NO;

@@ -189,15 +189,27 @@
             cell.textLabel.text = @"微博广场";
             break;
             
-            case XDLostAndFindIndex:
+        case XDLostAndFindIndex:
             cell.textLabel.text = @"失物招领";
+            break;
+            
+        case XDCEERIndex:
+            cell.textLabel.text = @"高考录取";
+            break;
+            
+        case XDWelcomeNewbieIndex:
+            cell.textLabel.text = @"新生指南";
+            break;
+            
+        case XDMapIndex:
+            cell.textLabel.text = @"西电地图";
             break;
             
         default:
             break;
     }
     
-    NSArray *cellImageArray = [NSArray arrayWithObjects:@"side_cell_time", @"side_cell_tel", @"side_cell_curriculum", @"side_cell_news", @"side_cell_teacher", @"side_cell_recuitment", @"side_cell_academia", @"side_cell_weibo", @"side_cell_lostandfound", nil];
+    NSArray *cellImageArray = [NSArray arrayWithObjects:@"side_cell_time", @"side_cell_tel", @"side_cell_curriculum", @"side_cell_news", @"side_cell_teacher", @"side_cell_recuitment", @"side_cell_academia", @"side_cell_welcomenewbie", @"side_cell_map", @"side_cell_ceer",  @"side_cell_weibo", @"side_cell_lostandfound", nil];
     if (indexPath.row == 0) {
         cell.imageView.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_posts", kPNGFileType)];
     }
@@ -354,8 +366,39 @@
                 [ApplicationDelegate.globalNavController pushViewController:lost animated:NO];
                 
                 [self.revealSideViewController popViewControllerAnimated:YES];
-
+                break;
             }
+                
+            case XDCEERIndex:
+            {
+                CCWebViewController *webView = [[CCWebViewController alloc] initWithAddress:@"http://www.xidian.cc/app/all2013/2013query.html"];
+                [ApplicationDelegate.globalNavController popToRootViewControllerAnimated:NO];
+                [ApplicationDelegate.globalNavController pushViewController:webView animated:NO];
+                
+                [self.revealSideViewController popViewControllerAnimated:YES];
+                break;
+            }
+                
+            case XDWelcomeNewbieIndex:
+            {
+                SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://new.xidian.cc/m"];
+                [ApplicationDelegate.globalNavController popToRootViewControllerAnimated:NO];
+                [ApplicationDelegate.globalNavController pushViewController:webView animated:NO];
+                
+                [self.revealSideViewController popViewControllerAnimated:YES];
+                break;
+            }
+                
+            case XDMapIndex:
+            {
+                SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://map.xidian.cc/m"];
+                [ApplicationDelegate.globalNavController popToRootViewControllerAnimated:NO];
+                [ApplicationDelegate.globalNavController pushViewController:webView animated:NO];
+                
+                [self.revealSideViewController popViewControllerAnimated:YES];
+                break;
+            }
+                
             default:
                 break;
         }

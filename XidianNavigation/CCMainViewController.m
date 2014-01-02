@@ -11,9 +11,9 @@
 #import "CCNewsViewController.h"
 #import "CCRecuitmentViewController.h"
 #import "CCAcademiaViewController.h"
-//#import "CCCurriculumSelectViewController.h"
-//#import "CCCurriculumStudentViewController.h"
-//#import "CCCurriculumTeacherViewController.h"
+#import "CCCurriculumSelectViewController.h"
+#import "CCCurriculumStudentViewController.h"
+#import "CCCurriculumTeacherViewController.h"
 #import "CCSinaWeiboViewController.h"
 #import "CCLostAndFindViewController.h"
 #import "CCAboutViewController.h"
@@ -79,11 +79,11 @@
     
     // Define some Modules
     self.list = [NSArray arrayWithObjects:@"西电时间",
-                 @"西电电话", @"西电课表", @"西电新闻", @"教师主页", @"西电招聘", @"学术报告", @"微博列表", @"失物招领", nil];
+                 @"西电电话", @"西电课表", @"西电新闻", @"教师主页", @"西电招聘", @"学术报告", @"新生指南", @"西电地图", nil];
     
     self.icons = [NSArray arrayWithObjects:@"main_time",
                   @"main_tel", @"main_curriculum", @"main_news",
-                  @"main_teacher", @"main_recuitment", @"main_academia", @"main_weibo", @"main_lostfound", nil];
+                  @"main_teacher", @"main_recuitment", @"main_academia", @"main_welcomenewbie", @"main_map", nil];
     
     for (int i=0; i<[self.icons count]; i++) {
         
@@ -317,21 +317,21 @@
             
         case XDCurriculumScheduleIndex:
 		{
-			SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://kb.xidian.cc/m/index.php"];
+//			SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://kb.xidian.cc/m/index.php"];
+//            
+//			[self.navigationController pushViewController:webView animated:YES];
             
-			[self.navigationController pushViewController:webView animated:YES];
-            
-//            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-//            id viewController = nil;
-//            NSString *value = [defaults objectForKey:@"curriculumClassNumberOrTeacherName"];
-//            if ([value intValue]) {
-//                viewController = [[CCCurriculumStudentViewController alloc] init];
-//            } else if (value.length > 1 && value.length < 6) {
-//                viewController = [[CCCurriculumTeacherViewController alloc] init];
-//            } else {
-//                viewController = [[CCCurriculumSelectViewController alloc] initWithNibName:@"CCCurriculumSelectViewController" bundle:nil];
-//            }
-//            [self.navigationController pushViewController:viewController animated:YES];
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            id viewController = nil;
+            NSString *value = [defaults objectForKey:@"curriculumClassNumberOrTeacherName"];
+            if ([value intValue]) {
+                viewController = [[CCCurriculumStudentViewController alloc] init];
+            } else if (value.length > 1 && value.length < 6) {
+                viewController = [[CCCurriculumTeacherViewController alloc] init];
+            } else {
+                viewController = [[CCCurriculumSelectViewController alloc] initWithNibName:@"CCCurriculumSelectViewController" bundle:nil];
+            }
+            [self.navigationController pushViewController:viewController animated:YES];
             
 			break;
 		}
@@ -370,19 +370,38 @@
             
 			break;
 		}
-        case XDSinaWeiboIndex:
-        {
-            CCSinaWeiboViewController *sinaWeiboView = [[CCSinaWeiboViewController alloc] initWithNibName:@"CCSinaWeiboViewController" bundle:nil];
+//            
+//        case XDSinaWeiboIndex:
+//        {
+//            CCSinaWeiboViewController *sinaWeiboView = [[CCSinaWeiboViewController alloc] initWithNibName:@"CCSinaWeiboViewController" bundle:nil];
+//            
+//            [self.navigationController pushViewController:sinaWeiboView animated:YES];
+//            
+//            break;
+//        }
+//            
+//        case XDLostAndFindIndex:
+//        {
+//            CCLostAndFindViewController *lost = [[CCLostAndFindViewController alloc] init];
+//            [self.navigationController pushViewController:lost animated:YES];
+//            
+//            break;
+//        }
             
-            [self.navigationController pushViewController:sinaWeiboView animated:YES];
+        case XDWelcomeNewbieIndex:
+        {
+            SVWebViewController *welcome = [[SVWebViewController alloc] initWithAddress:@"http://new.xidian.cc/m"];
+            [self.navigationController pushViewController:welcome animated:YES];
             
             break;
         }
             
-            case XDLostAndFindIndex:
+        case XDMapIndex:
         {
-            CCLostAndFindViewController *lost = [[CCLostAndFindViewController alloc] init];
-            [self.navigationController pushViewController:lost animated:YES];
+            SVWebViewController *map = [[SVWebViewController alloc] initWithAddress:@"http://map.xidian.cc/m"];
+            [self.navigationController pushViewController:map animated:YES];
+            
+            break;
         }
             
         default:
