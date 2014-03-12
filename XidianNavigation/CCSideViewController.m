@@ -40,9 +40,9 @@
 - (void)showFeedbackView
 {
 //    CCFeedbackViewController *feedbackViewController = [[CCFeedbackViewController alloc] initWithNibName:@"CCFeedbackViewController" bundle:nil];
-    SVModalWebViewController *feedbackViewController = [[SVModalWebViewController alloc] initWithAddress:@"http://www.xidian.cc/app/plus/guestbook.php"];
-    feedbackViewController.title = @"意见反馈";
 //    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:feedbackViewController];
+    SVModalWebViewController *feedbackViewController = [[SVModalWebViewController alloc] initWithAddress:@"http://app.xidian.cc/feedback.php"];
+    feedbackViewController.title = @"意见反馈";
     feedbackViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self presentViewController:feedbackViewController animated:YES completion:nil];
 }
@@ -205,11 +205,16 @@
             cell.textLabel.text = @"西电地图";
             break;
             
+        case XDReportRepaireIndex:
+            cell.textLabel.text = @"维修服务";
+            break;
+            
         default:
             break;
     }
     
-    NSArray *cellImageArray = [NSArray arrayWithObjects:@"side_cell_time", @"side_cell_tel", @"side_cell_curriculum", @"side_cell_news", @"side_cell_teacher", @"side_cell_recuitment", @"side_cell_academia", @"side_cell_welcomenewbie", @"side_cell_map", @"side_cell_ceer",  @"side_cell_weibo", @"side_cell_lostandfound", nil];
+    NSArray *cellImageArray = [NSArray arrayWithObjects:@"side_cell_time", @"side_cell_tel", @"side_cell_curriculum", @"side_cell_news", @"side_cell_teacher", @"side_cell_recuitment", @"side_cell_academia", @"side_cell_repair", @"side_cell_map", @"side_cell_ceer",  @"side_cell_weibo", @"side_cell_lostandfound", @"side_cell_welcomenewbie", nil];
+    
     if (indexPath.row == 0) {
         cell.imageView.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_posts", kPNGFileType)];
     }
@@ -392,6 +397,16 @@
             case XDMapIndex:
             {
                 SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://map.xidian.cc/m"];
+                [ApplicationDelegate.globalNavController popToRootViewControllerAnimated:NO];
+                [ApplicationDelegate.globalNavController pushViewController:webView animated:NO];
+                
+                [self.revealSideViewController popViewControllerAnimated:YES];
+                break;
+            }
+                
+            case XDReportRepaireIndex:
+            {
+                SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://1000.xidian.edu.cn/m/index.php"];
                 [ApplicationDelegate.globalNavController popToRootViewControllerAnimated:NO];
                 [ApplicationDelegate.globalNavController pushViewController:webView animated:NO];
                 

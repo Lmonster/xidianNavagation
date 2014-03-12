@@ -179,7 +179,7 @@
         }
         case kWebsitesIndex:
         {
-            cell.detailTextLabel.text = @"http://www.xidian.cc/app/";
+            cell.detailTextLabel.text = @"http://app.xidian.cc";
             cell.detailTextLabel.font = [UIFont systemFontOfSize:12];
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
             break;

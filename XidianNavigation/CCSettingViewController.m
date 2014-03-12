@@ -85,12 +85,18 @@
         NSURL *url = [NSURL URLWithString:@"http://www.xidian.cc/ios/iosversion.php"];
         NSString *remoteVersion = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         NSString *localeVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
-        if ([remoteVersion isEqualToString:localeVersion]) {
+        if ([remoteVersion isEqualToString:localeVersion]) { // 和远程版本号相同
             hud.dimBackground = NO;
             hud.mode = MBProgressHUDModeText;
             hud.labelText = @"当前已是最新版本";
             [hud hide:YES afterDelay:2.0f];
-        } else if ([remoteVersion compare:localeVersion] == NSOrderedDescending) {
+        } else if ([[remoteVersion substringWithRange:NSMakeRange(0, 1)] isEqualToString:@"2"] && [localeVersion compare:@"1.0.4"] == NSOrderedAscending) {  // 本地版本号小于1.0.4 并且 远程版本号为2.x时 提示以下信息
+            hud.dimBackground = NO;
+            hud.mode = MBProgressHUDModeText;
+            hud.labelText = @"发现新版本";
+            hud.detailsLabelText = [NSString stringWithFormat:@"新版本 v%@ 已经发布\n完美支持iOS7，请下载体验！", remoteVersion];
+            [hud hide:YES afterDelay:6.0f];
+        } else if ([remoteVersion compare:localeVersion] == NSOrderedDescending) { // 如果远程版本比本地版本高
             hud.dimBackground = NO;
             hud.mode = MBProgressHUDModeText;
             hud.labelText = [NSString stringWithFormat:@"发现新版本"];
@@ -110,7 +116,7 @@
 - (IBAction)feedbackButtonPressed:(id)sender
 {
 //    CCFeedbackViewController *feedback = [[CCFeedbackViewController alloc] init];
-    SVWebViewController *feedback = [[SVWebViewController alloc] initWithAddress:@"http://www.xidian.cc/app/plus/guestbook.php"];
+    SVWebViewController *feedback = [[SVWebViewController alloc] initWithAddress:@"http://app.xidian.cc/feedback.php"];
     feedback.title = @"意见反馈";
     [self.navigationController pushViewController:feedback animated:YES];
 }

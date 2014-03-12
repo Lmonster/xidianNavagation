@@ -74,16 +74,16 @@
     [[UIApplication sharedApplication] setStatusBarHidden:NO];
 
     
-    self.title = @"西电导航主页";
+    self.title = @"西电导航";
     
     
     // Define some Modules
     self.list = [NSArray arrayWithObjects:@"西电时间",
-                 @"西电电话", @"西电课表", @"西电新闻", @"教师主页", @"西电招聘", @"学术报告", @"新生指南", @"西电地图", nil];
+                 @"西电电话", @"西电课表", @"西电新闻", @"教师主页", @"西电招聘", @"学术报告", @"维修服务", @"西电地图", nil];
     
     self.icons = [NSArray arrayWithObjects:@"main_time",
                   @"main_tel", @"main_curriculum", @"main_news",
-                  @"main_teacher", @"main_recuitment", @"main_academia", @"main_welcomenewbie", @"main_map", nil];
+                  @"main_teacher", @"main_recuitment", @"main_academia", @"main_repair", @"main_map", nil];
     
     for (int i=0; i<[self.icons count]; i++) {
         
@@ -237,12 +237,18 @@
 
 - (void)changeTitle
 {
-    if ([self.reachability currentReachabilityStatus] == NotReachable) {
-        self.title = @"西电导航（无网络）";
-        [self showNetworkErrorNotifier];
-    } else {
-        self.title = @"西电导航";
-    }
+    double delayInSeconds = 1.5;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        
+        if ([self.reachability currentReachabilityStatus] == NotReachable) {
+            self.title = @"西电导航（无网络）";
+            [self showNetworkErrorNotifier];
+        } else {
+            self.title = @"西电导航";
+        }
+        
+    });
 }
 
 - (void)changeTheme:(NSNotification *)notificaton
@@ -387,11 +393,19 @@
 //            
 //            break;
 //        }
+//            
+//        case XDWelcomeNewbieIndex:
+//        {
+//            SVWebViewController *welcome = [[SVWebViewController alloc] initWithAddress:@"http://new.xidian.cc/m"];
+//            [self.navigationController pushViewController:welcome animated:YES];
+//            
+//            break;
+//        }
             
-        case XDWelcomeNewbieIndex:
+        case XDReportRepaireIndex:
         {
-            SVWebViewController *welcome = [[SVWebViewController alloc] initWithAddress:@"http://new.xidian.cc/m"];
-            [self.navigationController pushViewController:welcome animated:YES];
+            SVWebViewController *report = [[SVWebViewController alloc] initWithAddress:@"http://1000.xidian.edu.cn/m/index.php"];
+            [self.navigationController pushViewController:report animated:YES];
             
             break;
         }
@@ -404,6 +418,7 @@
             break;
         }
             
+           
         default:
             break;
     }
