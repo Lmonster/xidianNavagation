@@ -2,6 +2,8 @@
 [Tt]humbs.db
 *.DS_Store
 *.bak*
+*._*
+*.swp
 profile
 
 #Xcode files
@@ -10,8 +12,12 @@ profile
 *.xcuserdatad
 *.xcworkspace
 *.xcodeproj/*.pbxuser
+XidianNavigation.xcodeproj/project.xcworkspace/xcuserdata/ooops.xcuserdatad/UserInterfaceState.xcuserstate
 
 #Project files
 [Bb]uild/*
 *~.nib
 *~
+
+#Git files
+.gitignore
