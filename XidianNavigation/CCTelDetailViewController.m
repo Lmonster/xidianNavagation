@@ -131,7 +131,6 @@
     
     
     
-    cell.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1];
 
 
 //    UIColor *whiteColor = [UIColor whiteColor];

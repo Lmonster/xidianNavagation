@@ -54,6 +54,8 @@
         btn.showsTouchWhenHighlighted = YES;
     }
     
+    if (!GTE_IOS7) {
+        
     
     UIImage *backButtonImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
     
@@ -62,7 +64,7 @@
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
     
-
+    }
     
     
     [[NSNotificationCenter defaultCenter] addObserver:self

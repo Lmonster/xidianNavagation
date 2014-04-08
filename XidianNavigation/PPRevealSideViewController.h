@@ -55,7 +55,7 @@ enum {
     /** This cannot be used as a direction. Only for internal use ! */
     PPRevealSideDirectionNone = 0,
 };
-typedef NSUInteger PPRevealSideDirection;
+typedef int PPRevealSideDirection;
 
 /** @enum PPRevealSideInteractions 
  The interactions availabled 

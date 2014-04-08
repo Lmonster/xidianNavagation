@@ -22,4 +22,5 @@
     #import "EGORefreshTableHeaderView.h"
     #import "UIColor+HexColor.h"
     #import "ThemeManager.h"
+    #import "BaiduMobStat.h"
 #endif

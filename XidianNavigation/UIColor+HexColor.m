@@ -14,9 +14,9 @@
 {
     NSString *hex = [hexColor substringFromIndex:1];
     
-    NSUInteger red = -1;
-    NSUInteger green = -1;
-    NSUInteger blue = -1;
+    unsigned int red = -1;
+    unsigned int green = -1;
+    unsigned int blue = -1;
     
     [[NSScanner scannerWithString:[hex substringWithRange:NSMakeRange(0, 2)]] scanHexInt:&red];
     [[NSScanner scannerWithString:[hex substringWithRange:NSMakeRange(2, 2)]] scanHexInt:&green];

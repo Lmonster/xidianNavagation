@@ -133,8 +133,8 @@
         NSString *value1 = obj1[@"profile_url"];
         NSString *value2 = obj2[@"profile_url"];
         if (value1 != nil && [accordingArray containsObject:value1] && value2 != nil && [accordingArray containsObject:value2]) {
-            int loc1 = [accordingArray indexOfObject:value1];
-            int loc2 = [accordingArray indexOfObject:value2];
+            unsigned long loc1 = [accordingArray indexOfObject:value1];
+            unsigned long loc2 = [accordingArray indexOfObject:value2];
             return loc1 == loc2 ? NSOrderedSame : loc1 > loc2 ? NSOrderedDescending : NSOrderedAscending;
         } else {
             return [accordingArray containsObject:value1] ? NSOrderedDescending : NSOrderedAscending;

@@ -12,12 +12,6 @@
 #import "SinaWeibo.h"
 #import "CCSinaWeiboViewController.h"
 #import "CCGuideViewController.h"
-//#import "CCNewsViewController.h"
-//#import "CCRecuitmentViewController.h"
-//#import "SVWebViewController.h"
-//#import "BWStatusBarOverlay.h"
-//#import "CCAboutViewController.h"
-
 
 
 @implementation CCAppDelegate
@@ -30,11 +24,19 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     
+    // set global tintcolor for ios7+
+    if (GTE_IOS7) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+        self.window.tintColor = [UIColor blackColor];
+        [[UIBarButtonItem appearance] setTintColor:[UIColor blackColor]];
+        [[UINavigationBar appearance] setTintColor:[UIColor blackColor]];
+    }
+
+    
     // View Window Related
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     BOOL isFirstLaunch = [[NSUserDefaults standardUserDefaults] boolForKey:@"CCAppFirstLaunch"] == NO;
     if (isFirstLaunch) {
-        
         CCGuideViewController *guide = [[CCGuideViewController alloc] initWithNibName:@"CCGuideViewController" bundle:nil];
         self.window.rootViewController = guide;
         
@@ -52,8 +54,6 @@
     self.window.backgroundColor = [UIColor clearColor];
     [self.window makeKeyAndVisible];
     
-    
-
     
     
     // Set network engines
@@ -91,35 +91,22 @@
         self.sinaWeibo.userID = [sinaweiboInfo objectForKey:@"UserIDKey"];
     }
     
-
-//    [[NSNotificationCenter defaultCenter] addObserver:self
-//                                             selector:@selector(reachabilityChanged:)
-//                                                 name:kReachabilityChangedNotification
-//                                               object:nil];
-//    self.reachability = [CCReachability reachabilityWithHostname:@"www.baidu.com"];
-//    [self.reachability startNotifier];
     
-    //
-    //    MTStatusBarOverlay *overlay = [MTStatusBarOverlay sharedInstance];
-    //    overlay.animation = MTStatusBarOverlayAnimationShrink;
-    //        overlay.delegate = self;
-    //    overlay.progress = 0.0;
-    //    [overlay postMessage:@"连接错误，请检查你的网络或稍后再试" duration:4.0];
-    //    [overlay postImmediateMessage:@"连接错误，请检查你的网络或稍后再试" duration:4.0 animated:YES];
-    //    overlay.progress = 1.0;
+    // Baidu Statistics
+    BaiduMobStat *statTracker = [BaiduMobStat defaultStat];
+    statTracker.enableExceptionLog = YES;
+    statTracker.logSendWifiOnly = NO;
+    statTracker.logStrategy = BaiduMobStatLogStrategyAppLaunch;
+    statTracker.enableDebugOn = NO;
+    statTracker.sessionResumeInterval = 15;
+    statTracker.shortAppVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [statTracker startWithAppId:kBaiduStatisticsAppId];
+    
+
     
     return YES;
 }
 
-//- (void)reachabilityChanged:(NSNotification *)notification
-//{
-//    if ([self.reachability isReachable]) {
-//        
-//    } else {
-//        [BWStatusBarOverlay setAnimation:BWStatusBarOverlayAnimationTypeFromTop];
-//        [BWStatusBarOverlay showSuccessWithMessage:@"连接错误，请检查你的网络或稍后再试" duration:4.0 animated:YES];
-//    }
-//}
 
 
 - (void)applicationWillResignActive:(UIApplication *)application

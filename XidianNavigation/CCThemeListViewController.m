@@ -32,7 +32,9 @@
     // Do any additional setup after loading the view from its nib.
     
     self.title = @"界面风格";
-    
+
+    if (!GTE_IOS7) {
+        
     UIImage *backButtonImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
@@ -48,6 +50,8 @@
      setBackButtonBackgroundImage:backButtonImageActive
      forState:UIControlStateHighlighted
      barMetrics:UIBarMetricsDefault];
+        
+    }
 
 }
 
@@ -58,6 +62,16 @@
     
     self.selectedImage.center = CGPointMake(i * 105 + 87, 34);
     [super viewWillAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (void)didReceiveMemoryWarning
@@ -76,7 +90,7 @@
 
 - (IBAction)selectThemeAtIndex:(UIButton *)sender
 {
-    int i = sender.tag - 420;
+    long i = sender.tag - 420;
     
     [[ThemeManager sharedInstance]
      setTheme:[[self themes] objectAtIndex:i]];

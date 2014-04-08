@@ -53,8 +53,10 @@
 
     // Configure NavBar
     self.title = @"意见反馈";
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)]
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)]
                                                   forBarMetrics:UIBarMetricsDefault];
+    
+    if (!GTE_IOS7) {
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common_active", kPNGFileType)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     
@@ -63,7 +65,7 @@
     
     UIImage *backButtonImageActive = [[UIImage imageNamed:@"btn_back_active.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackButtonBackgroundImage:backButtonImageActive forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-
+    }
     
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIColor blackColor], UITextAttributeTextColor,

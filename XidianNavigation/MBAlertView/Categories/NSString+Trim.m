@@ -12,7 +12,7 @@
 
 -(NSString*)stringByTruncatingToSize:(CGSize)size withFont:(UIFont*)font addQuotes:(BOOL)addQuotes
 {
-    int min = 0, max = self.length, mid;
+    long min = 0, max = self.length, mid;
     while (min < max) {
         mid = (min+max)/2;
         

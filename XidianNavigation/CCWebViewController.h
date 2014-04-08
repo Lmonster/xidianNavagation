@@ -16,6 +16,7 @@
 
 @property (nonatomic, readwrite) SVWebViewControllerAvailableActions availableActions;
 @property (strong, nonatomic) UIImage *rowImage;
+@property (nonatomic, copy) NSString *webpageTitle;
 
 
 

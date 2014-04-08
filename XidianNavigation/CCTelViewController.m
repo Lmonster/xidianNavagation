@@ -149,7 +149,7 @@
     cell.textLabel.minimumFontSize = 8.0f;
     cell.textLabel.textColor = [UIColor colorWithWhite:.2 alpha:1];
     
-    cell.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1];
+//    cell.backgroundColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1];
     
 //    UIColor *whiteColor = [UIColor whiteColor];
 //    CGSize shadowOffset = CGSizeMake(0, 1);
@@ -178,7 +178,7 @@
     } else {
         NSDictionary *cellContent = [[self.cellContentValues objectAtIndex:indexPath.section - 1] objectAtIndex:indexPath.row];
         
-        telDetail.Dpid = [[cellContent objectForKey:@"Did"] integerValue];
+        telDetail.Dpid = [[cellContent objectForKey:@"Did"] intValue];
         telDetail.Dname = [cellContent objectForKey:@"Dname"];
         telDetail.commonlist = nil;
         

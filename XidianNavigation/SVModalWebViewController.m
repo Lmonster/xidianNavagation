@@ -39,11 +39,22 @@
     [super viewWillAppear:NO];
     
     self.navigationBar.tintColor = self.toolbar.tintColor = self.barsTintColor;
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!GTE_IOS7) {
     
     UIImage *barButtonImageNormal = [UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:barButtonImageNormal forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
@@ -68,6 +79,7 @@
      forState:UIControlStateHighlighted
      barMetrics:UIBarMetricsDefault];
 
+    }
 }
 
 - (void)setAvailableActions:(SVWebViewControllerAvailableActions)newAvailableActions {

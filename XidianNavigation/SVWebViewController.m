@@ -172,14 +172,19 @@
     
     self.mainWebView.backgroundColor = [UIColor whiteColor];
     
+    if (!GTE_IOS7) {
+    
     UIImage *backButtonImageNormal = [[UIImage imageNamed:@"btn_back.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackButtonBackgroundImage:backButtonImageNormal forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     
     UIImage *backButtonImageActive = [[UIImage imageNamed:@"btn_back_active.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackButtonBackgroundImage:backButtonImageActive forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
     
+    }
+    
     [self.navigationController.toolbar setBackgroundImage:[UIImage imageNamed:@"nav_bot.png"] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav_top.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageNamed:@"nav_top.png"] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)] forBarMetrics:UIBarMetricsDefault];
+    
     
     
     //    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStyleBordered target:self action:@selector(showLeft)];
@@ -231,7 +236,6 @@
     [self.view addGestureRecognizer:swipeRight];
     //    [self.navigationController.navigationBar addGestureRecognizer:swipeRight];
     
-    
 }
 
 
@@ -241,6 +245,13 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         //        [self.navigationController setToolbarHidden:YES animated:NO];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation {
@@ -345,7 +356,10 @@
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
 	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
     
-    self.navigationItem.title = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    self.webpageTitle = [webView stringByEvaluatingJavaScriptFromString:@"document.title"];
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.webpageTitle];
+    NSString *shrinkedTitle = self.webpageTitle.length > 8 ? [[self.webpageTitle substringToIndex:8] stringByAppendingString:@"..."] : self.webpageTitle;
+    self.navigationItem.title = shrinkedTitle;
     [self updateToolbarItems];
 }
 

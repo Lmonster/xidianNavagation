@@ -22,7 +22,14 @@
 
 - (IBAction)segmentValueChanged:(id)sender
 {
-    self.selectedSegmentIndex = [sender selectedSegmentIndex];
+    self.selectedSegmentIndex = ((UISegmentedControl *)sender).selectedSegmentIndex;
+    
+    // update title and restart baidu statistics
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
+    self.title = self.segmentItems[self.selectedSegmentIndex];
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+    
+    
     [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         CGRect newframe = self.view.frame;
         newframe.origin.y = - self.view.frame.size.height;
@@ -32,7 +39,7 @@
         [self.tableView reloadData];
         [UIView animateWithDuration:.5 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
             CGRect oldframe = self.view.frame;
-            oldframe.origin.y = 0;
+            oldframe.origin.y = GTE_IOS7 ? 64 : 0;
             self.view.frame = oldframe;
         } completion:^(BOOL finished){
 //            [UIView animateWithDuration:.2 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
@@ -86,12 +93,16 @@
     
     self.callbackPaths = [NSArray arrayWithObjects:@"ios/south.php", @"ios/wap.php", @"ios/north.php", nil];
     
-    NSArray *segmentItems = [NSArray arrayWithObjects:@"南校区", @"全部", @"北校区", nil];
+    self.segmentItems = [NSArray arrayWithObjects:@"南校区", @"全部", @"北校区", nil];
     
-    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:segmentItems];
+    self.segmentedControl = [[UISegmentedControl alloc] initWithItems:self.segmentItems];
     self.segmentedControl.frame = CGRectMake(0, 0, 200, 30);
     self.segmentedControl.segmentedControlStyle = UISegmentedControlStyleBar;
-    self.segmentedControl.tintColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1.0];
+    if (GTE_IOS7) {
+        self.segmentedControl.tintColor = [UIColor colorWithRed:.4 green:.4 blue:.4 alpha:1.0];
+    } else {
+        self.segmentedControl.tintColor = [UIColor colorWithRed:.8 green:.8 blue:.8 alpha:1.0];
+    }
     [self.segmentedControl addTarget:self action:@selector(segmentValueChanged:) forControlEvents:UIControlEventValueChanged];
     id lastSelection = [[NSUserDefaults standardUserDefaults] valueForKey:@"CCRecuitmentLastSelected"];
     if (lastSelection != nil) {
@@ -102,7 +113,7 @@
         self.segmentedControl.selectedSegmentIndex = kRecuitmentTotalIndex;
     }
     self.navigationItem.titleView = self.segmentedControl;
-    
+    self.title = self.segmentItems[self.selectedSegmentIndex];
     
     
     
@@ -126,15 +137,19 @@
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:[NSNumber numberWithInt:self.selectedSegmentIndex] forKey:@"CCRecuitmentLastSelected"];
+    [defaults setValue:[NSNumber numberWithInteger:self.selectedSegmentIndex] forKey:@"CCRecuitmentLastSelected"];
     [defaults synchronize];
     
     [super viewWillDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 

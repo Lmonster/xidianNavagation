@@ -62,6 +62,20 @@
 
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -217,6 +231,11 @@
     self.navigationController.view.center = CGPointMake(self.navigationController.view.center.x, self.navigationController.view.center.y - self.searchBar.bounds.size.height);
     
     [self.searchBar setShowsCancelButton:YES animated:YES];
+    
+    if (GTE_IOS7) {
+        self.title = @"";
+    }
+    
     [UIView animateWithDuration:0.25f
                           delay:0
                         options:UIViewAnimationOptionCurveLinear
@@ -244,6 +263,10 @@
     self.navigationController.view.center = CGPointMake(self.navigationController.view.center.x, self.navigationController.view.center.y + self.searchBar.bounds.size.height);
     
     [self.searchBar setShowsCancelButton:NO animated:YES];
+    
+    if (GTE_IOS7) {
+        self.title = @"电话搜索";
+    }
     
     [self hideKeyboard];
     [UIView animateWithDuration:0.25f

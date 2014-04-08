@@ -33,6 +33,8 @@
     [self.view addSubview:self.lost.view];
     self.title = @"失物信息";
     
+    if (!GTE_IOS7) {
+    
     UIImage *barButtonImageNormal = [UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
@@ -40,10 +42,14 @@
      forState:UIControlStateNormal
      barMetrics:UIBarMetricsDefault];
     
+    }
+    
     UIButton *publishButton = [UIButton buttonWithType:UIButtonTypeCustom];
     publishButton.frame = CGRectMake(0, 0, 44, 44);
     [publishButton addTarget:self action:@selector(publishNewInfo) forControlEvents:UIControlEventTouchUpInside];
-    [publishButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"icon_compose", kPNGFileType)] forState:UIControlStateNormal];
+    if (!GTE_IOS7) {
+        [publishButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"icon_compose", kPNGFileType)] forState:UIControlStateNormal];
+    }
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:publishButton];
 
     
@@ -64,6 +70,20 @@
     [self.segmentedControl setTitleTextAttributes:attributesHighlighted forState:UIControlStateSelected];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -81,9 +101,13 @@
 
 - (IBAction)segmentIndexChanged:(id)sender
 {
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
+
     UISegmentedControl *segmentControl = (UISegmentedControl *)sender;
     if (segmentControl.selectedSegmentIndex) {
         self.title = @"招领信息";
+        [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
         if (self.find == nil) {
             [self initFindView];
             [self.view addSubview:self.find.view];
@@ -92,6 +116,7 @@
         }
     } else {
         self.title = @"失物信息";
+        [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
         if (self.lost == nil) {
             [self initLostView];
             [self.view addSubview:self.lost.view];

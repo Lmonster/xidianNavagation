@@ -11,7 +11,7 @@
 
 @interface CCTelDetailViewController : CCMainTableViewController <UIActionSheetDelegate>
 
-@property NSInteger Dpid;
+@property int Dpid;
 @property (strong, nonatomic) NSString *Dname;
 @property (strong, nonatomic) NSArray *datalist;
 @property (strong, nonatomic) NSDictionary *commonlist;

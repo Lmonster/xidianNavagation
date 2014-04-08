@@ -27,6 +27,8 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.title = @"新闻正文";
 }
 
 - (void)didReceiveMemoryWarning

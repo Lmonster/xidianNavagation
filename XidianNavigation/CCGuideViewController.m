@@ -44,12 +44,22 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:@"用户引导页"];
+}
+
 - (void)viewDidDisappear:(BOOL)animated
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults setBool:YES forKey:@"CCAppFirstLaunch"];
     [defaults synchronize];
     [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:@"用户引导页"];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -65,7 +75,15 @@
         ApplicationDelegate.globalNavController = [[UINavigationController alloc] initWithRootViewController:main];
         ApplicationDelegate.revealSideViewController = [[PPRevealSideViewController alloc] initWithRootViewController:ApplicationDelegate.globalNavController];
         [ApplicationDelegate.revealSideViewController setPanInteractionsWhenClosed:PPRevealSideInteractionNavigationBar];
-        ApplicationDelegate.revealSideViewController.view.frame = CGRectMake(0, 20, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 20);
+        if (!GTE_IOS7) {
+            ApplicationDelegate.revealSideViewController.view.frame = CGRectMake(0,
+                                                                                 20,
+                                                                                 [[UIScreen mainScreen] bounds].size.width,
+                                                                                 [[UIScreen mainScreen] bounds].size.height - 20);
+
+        } else {
+            ApplicationDelegate.revealSideViewController.view.frame = [UIScreen mainScreen].bounds;
+        }
         
         [UIView transitionFromView:self.view
                             toView:ApplicationDelegate.revealSideViewController.view

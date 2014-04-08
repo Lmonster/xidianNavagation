@@ -10,6 +10,7 @@
 #import "CCXidianEngine.h"
 #import "CCWeiboEngine.h"
 
+#define GTE_IOS7                                ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
 
 #define kPNGFileType                            @"png"
 #define kJPEGFileType                           @"jpg"
@@ -20,14 +21,17 @@
 
 #define ApplicationDelegate                     ((CCAppDelegate *)[UIApplication sharedApplication].delegate)
 #define PathInMainBundle(_name_, _type_)        [[NSBundle mainBundle] pathForResource:_name_ ofType:_type_]
-#define URLInMainBundle(_name_, _type_)          [[NSBundle mainBundle] pathForResource:_name_ ofType:_type_]
+#define URLInMainBundle(_name_, _type_)         [[NSBundle mainBundle] pathForResource:_name_ ofType:_type_]
 #define VIEWFRAMESIZE                           self.view.frame.size
 #define MARGIN                                  10.0f
 
+// sina weibo
+#define kAppKey                                 @"744699773"
+#define kAppSecret                              @"b063d79f5ed02392b25c5bc1a3722eda"
+#define kAppRedirectURI                         @"http://ooopscc.com"
 
-#define kAppKey             @"744699773"
-#define kAppSecret          @"b063d79f5ed02392b25c5bc1a3722eda"
-#define kAppRedirectURI     @"http://ooopscc.com"
+// baidu statistics
+#define kBaiduStatisticsAppId                   @"5b59ee9ce7"
 
 
 @class PPRevealSideViewController;

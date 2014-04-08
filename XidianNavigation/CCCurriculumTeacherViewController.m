@@ -39,6 +39,9 @@
     // Do any additional setup after loading the view from its nib.
     
     self.navigationItem.titleView = self.titleview;
+    
+    if (!GTE_IOS7) {
+        
     UIImage *barButtonImageNormal = [UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)];
     
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
@@ -61,6 +64,8 @@
      setBackButtonBackgroundImage:backButtonImageActive
      forState:UIControlStateHighlighted
      barMetrics:UIBarMetricsDefault];
+        
+    }
     
     UIBarButtonItem *switchButton = [[UIBarButtonItem alloc] initWithTitle:@"切换" style:UIBarButtonItemStyleBordered target:self action:@selector(switchView:)];
     self.navigationItem.rightBarButtonItem = switchButton;

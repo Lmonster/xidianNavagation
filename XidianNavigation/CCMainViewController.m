@@ -37,7 +37,9 @@
 {
     CCAboutViewController *about = [[CCAboutViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:about];
-    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    if (!GTE_IOS7) {
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    }
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -132,38 +134,52 @@
     }
     
     
-    UIImage *backButtonImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
+    if (!GTE_IOS7) {
+        
+        UIImage *backButtonImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
+        
+        [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+         setBackButtonBackgroundImage:backButtonImageNormal
+         forState:UIControlStateNormal
+         barMetrics:UIBarMetricsDefault];
+        
+        
+        UIImage *backButtonImageActive = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back_active", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
+        
+        [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
+         setBackButtonBackgroundImage:backButtonImageActive
+         forState:UIControlStateHighlighted
+         barMetrics:UIBarMetricsDefault];
+        
+        
+        UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"主页" style:UIBarButtonItemStyleBordered target:nil action:nil];
+        if (GTE_IOS7) {
+            backButton.title = @"";
+        }
+        self.navigationItem.backBarButtonItem = backButton;
+    }
     
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setBackButtonBackgroundImage:backButtonImageNormal
-     forState:UIControlStateNormal
-     barMetrics:UIBarMetricsDefault];
+    if (GTE_IOS7) {
+        [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(-1000, -1000) forBarMetrics:UIBarMetricsDefault];
+    }
     
-    
-    
-    
-    
-    UIImage *backButtonImageActive = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_back_active", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 14, 0, 5)];
-    
-    [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil]
-     setBackButtonBackgroundImage:backButtonImageActive
-     forState:UIControlStateHighlighted
-     barMetrics:UIBarMetricsDefault];
-    
-
-    
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"主页" style:UIBarButtonItemStyleBordered target:nil action:nil];
-    self.navigationItem.backBarButtonItem = backButton;
-    
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)] forBarMetrics:UIBarMetricsDefault];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)] forBarMetrics:UIBarMetricsDefault];
     
     UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@""
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(showLeftInMainView)];
     
-    menuButton.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"navbar_toggle", kPNGFileType)];
-    [menuButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    UIImage *menuButtonImage = [UIImage imageWithContentsOfFile:PathInMainBundle(@"navbar_toggle", kPNGFileType)];
+    if ([menuButtonImage respondsToSelector:@selector(imageWithRenderingMode:)]) {
+        menuButtonImage = [menuButtonImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    }
+    menuButton.image = menuButtonImage;
+
+    if (!GTE_IOS7) {
+        [menuButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    }
     
     self.navigationItem.leftBarButtonItem = menuButton;
     
@@ -206,7 +222,6 @@
 {
     [super viewWillAppear:animated];
     
-    
     UISwipeGestureRecognizer *swipeRight = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(showLeftInMainView)];
     swipeRight.direction = UISwipeGestureRecognizerDirectionRight;
     [self.view addGestureRecognizer:swipeRight];
@@ -223,6 +238,15 @@
 {
     [self.navigationController setToolbarHidden:YES animated:NO];
     [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:@"西电导航主页"];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:@"西电导航主页"];
 }
 
 
@@ -323,21 +347,21 @@
             
         case XDCurriculumScheduleIndex:
 		{
-//			SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://kb.xidian.cc/m/index.php"];
-//            
-//			[self.navigationController pushViewController:webView animated:YES];
+			SVWebViewController *webView = [[SVWebViewController alloc] initWithAddress:@"http://kb.xidian.cc/m/index.php"];
             
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            id viewController = nil;
-            NSString *value = [defaults objectForKey:@"curriculumClassNumberOrTeacherName"];
-            if ([value intValue]) {
-                viewController = [[CCCurriculumStudentViewController alloc] init];
-            } else if (value.length > 1 && value.length < 6) {
-                viewController = [[CCCurriculumTeacherViewController alloc] init];
-            } else {
-                viewController = [[CCCurriculumSelectViewController alloc] initWithNibName:@"CCCurriculumSelectViewController" bundle:nil];
-            }
-            [self.navigationController pushViewController:viewController animated:YES];
+			[self.navigationController pushViewController:webView animated:YES];
+            
+//            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+//            id viewController = nil;
+//            NSString *value = [defaults objectForKey:@"curriculumClassNumberOrTeacherName"];
+//            if ([value intValue]) {
+//                viewController = [[CCCurriculumStudentViewController alloc] init];
+//            } else if (value.length > 1 && value.length < 6) {
+//                viewController = [[CCCurriculumTeacherViewController alloc] init];
+//            } else {
+//                viewController = [[CCCurriculumSelectViewController alloc] initWithNibName:@"CCCurriculumSelectViewController" bundle:nil];
+//            }
+//            [self.navigationController pushViewController:viewController animated:YES];
             
 			break;
 		}
@@ -425,6 +449,7 @@
     
     
 }
+
 
 
 @end

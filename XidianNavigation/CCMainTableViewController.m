@@ -66,7 +66,7 @@
     
     
     
-    
+    if (!GTE_IOS7) {
     
     UIImage *barButtonImageNormal = [UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)];
     
@@ -96,7 +96,7 @@
      forState:UIControlStateHighlighted
      barMetrics:UIBarMetricsDefault];
     
-    
+    }
     
 
 
@@ -181,6 +181,15 @@
 {
     [self.navigationController setToolbarHidden:YES animated:NO];
     [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (void)didReceiveMemoryWarning

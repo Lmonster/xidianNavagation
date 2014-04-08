@@ -44,7 +44,7 @@
                         nil];
     
     
-    
+    if (!GTE_IOS7) {
     
     UIImage *barButtonImageNormal = [UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)];
     
@@ -76,11 +76,11 @@
     
     
     
+    }
     
     
     
-    
-    UIImage *navBarImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)];
+    UIImage *navBarImageNormal = [[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)];
     
     [self.navigationController.navigationBar setBackgroundImage:navBarImageNormal
                                                   forBarMetrics:UIBarMetricsDefault];
@@ -132,6 +132,15 @@
 {
     [self.navigationController setToolbarHidden:YES animated:NO];
     [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (void)didReceiveMemoryWarning

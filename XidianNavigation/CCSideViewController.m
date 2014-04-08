@@ -51,7 +51,9 @@
 {
     CCSettingViewController *settingViewController = [[CCSettingViewController alloc] initWithNibName:@"CCSettingViewController" bundle:nil];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:settingViewController];
-    nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    if (!GTE_IOS7) {
+        nav.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    }
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -73,6 +75,20 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    // if is ios 7
+    if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+        self.edgesForExtendedLayout = UIRectEdgeNone;
+        
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"sidebar_bg"]]];
+        
+        CGRect frame = self.table.frame;
+        frame.origin.y += 20;
+        frame.size.height -= 20;
+        self.table.frame = frame;
+
+    }
+    
+    
     //    UIImageView *tableHeaderImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"top-logo.png"]];
     UIImageView *tableHeaderImage = [[UIImageView alloc] initWithFrame:CGRectMake(25, -100, 200, 90)];
     tableHeaderImage.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_top_logo", kPNGFileType)];
@@ -81,23 +97,35 @@
     [self.table setSeparatorStyle:UITableViewCellSeparatorStyleNone];
     [self.table setBackgroundView:[[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_bg", kPNGFileType)]]];
     
+    
     [self.toolbar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_footer_bg", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(2, 0, 2, 0)] forToolbarPosition:UIToolbarPositionAny barMetrics:UIBarMetricsDefault];
+    
+    if (!GTE_IOS7) {
     
     [self.feedbackBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButton", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [self.feedbackBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButtonHighlighted", kPNGFileType)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    UIImageView *feedbackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(20, 12, 25, 25)];
+
+    [self.settingBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButton", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    [self.settingBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButtonHighlighted", kPNGFileType)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
+
+    }
+    
+    UIImageView *feedbackImageView = [[UIImageView alloc] initWithFrame:CGRectMake(25, 12, 25, 25)];
     feedbackImageView.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_feedback", kPNGFileType)];
     [self.toolbar addSubview:feedbackImageView];
     
-    [self.settingBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButton", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    [self.settingBarButton setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"SidebarToolbarButtonHighlighted", kPNGFileType)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    UIImageView *settingImageView = [[UIImageView alloc] initWithFrame:CGRectMake(136, 10, 25, 25)];
+    UIImageView *settingImageView = [[UIImageView alloc] initWithFrame:CGRectMake(141, 10, 25, 25)];
     settingImageView.image = [UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_setting", kPNGFileType)];
     [self.toolbar addSubview:settingImageView];
     
     [self.feedbackBarButton setAction:@selector(showFeedbackView)];
     [self.settingBarButton setAction:@selector(showSettingView)];
     
+    
+    if (GTE_IOS7) {
+        self.feedbackBarButton.tintColor = [UIColor whiteColor];
+        self.settingBarButton.tintColor = [UIColor whiteColor];
+    }
 }
 
 
@@ -106,13 +134,27 @@
     [super viewWillAppear:animated];
     
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    int selectedRow = [defaults integerForKey:@"selectedRow"];
-    int selectedSection = [defaults integerForKey:@"selectedSection"];
+    NSUInteger selectedRow = [defaults integerForKey:@"selectedRow"];
+    NSUInteger selectedSection = [defaults integerForKey:@"selectedSection"];
     [self.table selectRowAtIndexPath:[NSIndexPath indexPathForRow:selectedRow inSection:selectedSection]
                             animated:NO
                       scrollPosition:UITableViewScrollPositionNone];
+    
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:@"菜单栏"];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:@"菜单栏"];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -144,6 +186,9 @@
         cell.backgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_cell_bg", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0, 0, 1.0, 0)]];
         
         cell.selectedBackgroundView = [[UIImageView alloc] initWithImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"sidebar_cell_bg_selected", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(1.0, 0, 1.0, 0)]];
+        
+        cell.backgroundColor = [UIColor clearColor];
+        cell.contentView.backgroundColor = [UIColor clearColor];
     }
     
     // Configure the cell...

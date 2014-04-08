@@ -34,11 +34,16 @@
     // Do any additional setup after loading the view from its nib.
     self.title = @"设置";
     
-    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 10, 0, 10)]
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)]
                                                   forBarMetrics:UIBarMetricsDefault];
+    
+    if (!GTE_IOS7) {
+    
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common", kPNGFileType)] forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UIBarButtonItem appearanceWhenContainedIn:[UINavigationBar class], nil] setBackgroundImage:[UIImage imageWithContentsOfFile:PathInMainBundle(@"btn_common_active", kPNGFileType)] forState:UIControlStateHighlighted barMetrics:UIBarMetricsDefault];
-    
+        
+    }
+        
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIColor blackColor], UITextAttributeTextColor,
                                 [UIColor colorWithWhite:1.0 alpha:0.8], UITextAttributeTextShadowColor,
@@ -52,12 +57,22 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStylePlain target:self action:@selector(dismissViewController)];
     
     
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [self.navigationController setToolbarHidden:YES];
     [super viewDidAppear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewStartWithName:self.title];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [[BaiduMobStat defaultStat] pageviewEndWithName:self.title];
 }
 
 - (void)didReceiveMemoryWarning
@@ -85,6 +100,7 @@
         NSURL *url = [NSURL URLWithString:@"http://www.xidian.cc/ios/iosversion.php"];
         NSString *remoteVersion = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:&error];
         NSString *localeVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+
         if ([remoteVersion isEqualToString:localeVersion]) { // 和远程版本号相同
             hud.dimBackground = NO;
             hud.mode = MBProgressHUDModeText;

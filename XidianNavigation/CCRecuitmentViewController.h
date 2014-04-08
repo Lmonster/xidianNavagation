@@ -29,6 +29,7 @@ enum {
 @property (strong, nonatomic)  UISegmentedControl *segmentedControl;
 @property (strong, nonatomic) NSArray *datalist;
 @property (strong, nonatomic) NSArray *callbackPaths;
-@property int selectedSegmentIndex;
+@property (strong, nonatomic) NSArray *segmentItems;
+@property (assign, nonatomic) NSInteger selectedSegmentIndex;
 
 @end
