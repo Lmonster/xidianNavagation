@@ -165,7 +165,7 @@
     
     [self.navigationController.navigationBar setBackgroundImage:[[UIImage imageWithContentsOfFile:PathInMainBundle(@"nav_top", kPNGFileType)] resizableImageWithCapInsets:UIEdgeInsetsMake(20, 10, 20, 10)] forBarMetrics:UIBarMetricsDefault];
     
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@""
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithTitle:@" "
                                                                    style:UIBarButtonItemStyleBordered
                                                                   target:self
                                                                   action:@selector(showLeftInMainView)];
